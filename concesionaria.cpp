@@ -12,16 +12,18 @@ class Concesionaria {
             qtdVehicles++;
         }
 
-        void updateVehicle(int id, string field) {
+        void updateVehicle(string id, string field, string data) {
             Vehicle vehicle = getById(id);
-            if(vehicle != nullptr) { //como usa null?
-                if(tolower(field) == "brand") {
-                    vehicle.setBrand;
+            if(vehicle != nullptr) {                     //como usa null?
+                if(tolower(field) == "brand") {          //tolower?
+                    vehicle.setBrand(data);
+                } else if(tolower(field) == "year") {    //tolower?
+                    vehicle.setYear(data);
                 }
             }
         }
 
-        Vehicle getById(int id) {
+        Vehicle getById(string id) {
             for(int i=0;i<qtdVehicles;i++) {
                 if(vehicles[i].getId() == id) {
                     return vehicles[i];

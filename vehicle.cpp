@@ -4,17 +4,16 @@ using namespace std;
 
 class Vehicle {
     public:
-        int id, year;
-        string brand;   
-        Vehicle(string brands, int years, int iden) {
+        string id, year, brand;   
+        Vehicle(string brands, string years, string iden) {
             brand = brands;
             year = years;
             id = iden;
         }
-        void setYear(int years) {
+        void setYear(string years) {
             year = years;
         }  
-        void setId(int iden) {
+        void setId(string iden) {
             id = iden;
         }
         void setBrand(string brands) {
@@ -23,16 +22,16 @@ class Vehicle {
         string getBrand(void) {
             return brand;
         }
-        int getYear(void) {
+        string getYear(void) {
             return year;
         }
-        int getId(void) {
+        string getId(void) {
             return id;
         }
 };
 
 int main() {
-    Vehicle vehicle1("lamborghini", 2010, 246);
+    Vehicle vehicle1("lamborghini", "2010", "246");
     cout << vehicle1.getBrand() << " de " << vehicle1.getYear() << ": " << vehicle1.getId() << endl;
     return 0;
 }
