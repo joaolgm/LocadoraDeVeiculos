@@ -5,7 +5,7 @@ using namespace std;
 class Vehicle {
     public:
         string id, rented, type, year, model;   
-        Vehicle(string id_ string rented_, string type_, string year_, string model_) {
+        Vehicle(string id_, string rented_, string type_, string year_, string model_) {
             id = id_;
             rented = rented_;
             type = type_;
