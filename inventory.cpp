@@ -28,7 +28,7 @@ int searchVehicle(string id){
 
 void removeVehicle(string id){
     position = searchVehicle(id);
-    for(j = position; i < maxPosition - 1; i++){
+    for(j = position; j < maxPosition - 1; j++){
         ids[j] = ids[j + 1];
         rented[j] = rented[j + 1];
         years[j] = years[j + 1];
