@@ -20,21 +20,21 @@ void addVehicle(string id, string year, string type, string model) {
 
 int searchVehicle(string id){
     for(i = 0; i < vehicles; i++){
-   		if(id == ids[i]){
-               return i;
+        if(id == ids[i]){
+            return i;
         }
-   	}
+    }
 }
 
 void removeVehicle(string id){
     position = searchVehicle(id);
     for(j = position; i < maxPosition - 1; i++){
-   		ids[j] = ids[j + 1];
+        ids[j] = ids[j + 1];
         rented[j] = rented[j + 1];
         years[j] = years[j + 1];
         types[j] = types[j + 1];
         models[j] = models[j + 1];
-   	}
+    }
     vehicles--;
 }
 
@@ -69,7 +69,7 @@ void viewAll(){
         cout << "Inventário: " << endl;
         cout << " " << endl;
         for(k = 0; k < vehicles; k++){
-        cout << "Id: "<< ids[k] << " / Situação: " <<  rented[k] << " / Ano: " << years[k] << " / Tipo: " << types[k] << " / Modelo: " << models[k] << endl;
+            cout << "Id: "<< ids[k] << " / Situação: " <<  rented[k] << " / Ano: " << years[k] << " / Tipo: " << types[k] << " / Modelo: " << models[k] << endl;
         }
         cout << " " << endl;
     }
