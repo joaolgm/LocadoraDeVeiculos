@@ -40,11 +40,15 @@ void removeVehicle(string id){
 
 void viewVehicle(string id){
     position = searchVehicle(id);
-    printf("Id: %s \n", ids[position]);
-    printf("Alugado: %s \n", rented[position]);
-    printf("Ano de fabricação: %s \n", years[position]);
-    printf("Tipo: %s \n", types[position]);
-    printf("Modelo: %s \n", models[position]);
+    cout << " " << endl;
+    cout << "Visualização: " << endl;
+    cout << " " << endl;
+    cout << "Id: " << ids[position] << endl;
+    cout << "Situação: " << rented[position] << endl;
+    cout << "Ano de fabricação: " << years[position] << endl;
+    cout << "Tipo: " << types[position] << endl;
+    cout << "Modelo: " << models[position] << endl;
+    cout << " " << endl;
 } 
 
 string returnState(string id){
@@ -59,11 +63,15 @@ void updateVehicle(string id, string state){
 
 void viewAll(){
     if(vehicles == 0){
-        printf("O inventário está vazio.\n");
+        cout << "O inventário está vazio." << endl;
     } else {
+        cout << " " << endl;
+        cout << "Inventário: " << endl;
+        cout << " " << endl;
         for(k = 0; k < vehicles; k++){
-            printf("Id: %s / Situação: %s / Ano: %s / Tipo: %s / Modelo: %s \n", ids[k], rented[k], years[k], types[k], models[k]);
+        cout << "Id: "<< ids[k] << " / Situação: " <<  rented[k] << " / Ano: " << years[k] << " / Tipo: " << types[k] << " / Modelo: " << models[k] << endl;
         }
+        cout << " " << endl;
     }
 }
 
