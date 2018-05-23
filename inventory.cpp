@@ -9,6 +9,14 @@ int position = 0;
 int maxPosition = 50;
 int i, j, k;
 
+/**
+ * Adiciona um veiculo aos arrays com os dados passados.
+ *
+ * @param Id do veiculo
+ * @param Ano do veiculo
+ * @param Tipo do veiculo
+ * @param Modelo do veiculo
+*/
 void addVehicle(string id, string year, string type, string model) {
     ids[vehicles] = id;
     rented[vehicles] = "Disponível";
@@ -18,6 +26,12 @@ void addVehicle(string id, string year, string type, string model) {
     vehicles++;
 }
 
+/**
+ * Procura um veiculo a partir de seu id.
+ *
+ * @param Id do veiculo
+ * @return Indice do veiculo
+ */
 int searchVehicle(string id){
     for(i = 0; i < vehicles; i++){
         if(id == ids[i]){
@@ -26,6 +40,12 @@ int searchVehicle(string id){
     }
 }
 
+/**
+ * Remove um veiculo dos arrays a partir de seu id, usando
+ * o metodo searchVehicle(id).
+ *
+ * @param Id do veiculo
+ */
 void removeVehicle(string id){
     position = searchVehicle(id);
     for(j = position; j < maxPosition - 1; j++){
@@ -38,6 +58,12 @@ void removeVehicle(string id){
     vehicles--;
 }
 
+/**
+ * Mostra informacoes de um veiculo a partir de seu id, usando
+ * o metodo searchVehicle(id).
+ *
+ * @param Id do veiculo
+ */
 void viewVehicle(string id){
     position = searchVehicle(id);
     cout << " " << endl;
@@ -49,18 +75,36 @@ void viewVehicle(string id){
     cout << "Tipo: " << types[position] << endl;
     cout << "Modelo: " << models[position] << endl;
     cout << " " << endl;
-} 
+}
 
+/**
+ * Mostra a disponibilidade de um veiculo a partir de seu id, usando
+ * o metodo searchVehicle(id).
+ *
+ * @param Id do veiculo
+ * @return Disponibilidade do veiculo
+ */
 string returnState(string id){
     position = searchVehicle(id);
     return rented[position];
 }
 
+/**
+ * Atualiza o estado de um veiculo a partir de seu id, usando
+ * o metodo searchVehicle(id).
+ *
+ * @param Id do veiculo
+ * @param Novo estado do veiculo
+ */
 void updateVehicle(string id, string state){
     position = searchVehicle(id);
     rented[position] = state;
 }
 
+/**
+ * Mostra todos os veiculos do inventario, caso tenha,
+ * e seus dados.
+ */
 void viewAll(){
     if(vehicles == 0){
         cout << "O inventário está vazio." << endl;
@@ -74,4 +118,3 @@ void viewAll(){
         cout << " " << endl;
     }
 }
-
