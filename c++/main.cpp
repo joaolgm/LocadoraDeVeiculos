@@ -20,7 +20,9 @@ int main(){
         cout << "3 - Visualizar veículo do inventário." << endl;
         cout << "4 - Atualizar veículo do inventário." << endl;
         cout << "5 - Listar todos os veículos do inventário." << endl;
-        cout << "6 - Sair" << endl;
+        cout << "6 - Realizar Locação de Veículo." << endl;
+        cout << "7 - Recebimento de Veiculo." << endl;
+        cout << "8 - Sair" << endl;
 
         cin >> option;
 
@@ -67,7 +69,15 @@ int main(){
             case 5:
                 viewAll();
                 break;
+            case 6:
+                cout << "Digite o id do veículo a ser locado:" << endl;
+                cin >> id;
+                veichileRental(id);
+            case 7:
+                cout << "Digite o id do veículo a ser recebido:" << endl;
+                cin >> id;
+                receiveVehicles(id);
         }
     
-    } while(option != 6);
+    } while(option != 8);
 }

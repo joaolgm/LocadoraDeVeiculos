@@ -38,6 +38,7 @@ int searchVehicle(string id){
             return i;
         }
     }
+    return -1;
 }
 
 /**
@@ -48,14 +49,19 @@ int searchVehicle(string id){
  */
 void removeVehicle(string id){
     position = searchVehicle(id);
-    for(j = position; j < maxPosition - 1; j++){
-        ids[j] = ids[j + 1];
-        rented[j] = rented[j + 1];
-        years[j] = years[j + 1];
-        types[j] = types[j + 1];
-        models[j] = models[j + 1];
+    if(position != -1){
+        for(j = position; j < maxPosition - 1; j++){
+            ids[j] = ids[j + 1];
+            rented[j] = rented[j + 1];
+            years[j] = years[j + 1];
+            types[j] = types[j + 1];
+            models[j] = models[j + 1];
+        }
+        vehicles--;
+    }else{
+        cout << "Veiculo não encontrado!" << endl;
     }
-    vehicles--;
+    
 }
 
 /**
@@ -118,3 +124,35 @@ void viewAll(){
         cout << " " << endl;
     }
 }
+
+/**
+ * Realiza a locação de um veículo. Muda o estado se o veículo estiver disponivel.
+ *
+ */
+
+void veichileRental(string id){
+    position = searchVehicle(id);
+    if (strcmp (rented[position], "Disponível") == 0) {
+        rented[position] = "Indisponível";
+    }else{
+        cout << "O veículo está indisponível para locação" << endl;
+    }
+}
+
+/**
+ * Recebe o veículo e o torna disponível para locação.
+ *
+ */
+
+void receiveVehicles(string id){
+    position = searchVehicle(id);
+    if (position != -1) {
+        rented[position] = "Disponível";
+    }else{
+        cout << "O veículo a ser devolvido não está em nossa base de dados." << endl;
+    }
+    
+}
+
+
+
