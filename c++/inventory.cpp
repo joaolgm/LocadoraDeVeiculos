@@ -157,26 +157,22 @@ void receiveVehicles(string id){
 }
 
 /**
- * Mostra todos os veiculos disponíveis.
+ * Mostra todos os veiculos disponíveis ou todos os veículos indisponíveis a depender da situação.
  *
  */
-void viewAvaliables(){
+void viewAvailability(string situacion){
     if(vehicles == 0){
-        cout << "Não existem veiculos disponiveis" << endl;
+        cout << "Não existem veiculos com situação "<< situacion << endl;
     } else {
         cout << " " << endl;
-        cout << "Veículos Disponíveis: " << endl;
+        cout << "Veículos com Situação "<< situacion << ": "<< endl;
         cout << " " << endl;
-        string compara = "Disponível";
         for(k = 0; k < vehicles; k++){
-            if (strcmp(rented[position].c_str(), compara.c_str()) == 0) {
+            if (strcmp(rented[k].c_str(), situacion.c_str()) == 0) {
                 cout << "Id: "<< ids[k] << " / Situação: " <<  rented[k] << " / Ano: " << years[k] << " / Tipo: " << types[k] << " / Modelo: " << models[k] << endl;
             }
         }
         cout << " " << endl;
     }
 }
-
-
-
 

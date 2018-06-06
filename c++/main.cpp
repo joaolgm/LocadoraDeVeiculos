@@ -21,9 +21,10 @@ int main(){
         cout << "4 - Atualizar veículo do inventário." << endl;
         cout << "5 - Listar todos os veículos do inventário." << endl;
         cout << "6 - Listar os veículos disponíveis." << endl;
-        cout << "7 - Realizar Locação de Veículo." << endl;
-        cout << "8 - Recebimento de Veiculo." << endl;
-        cout << "9 - Sair" << endl;
+        cout << "7 - Listar os veículos indisponíveis." << endl;
+        cout << "8 - Realizar Locação de Veículo." << endl;
+        cout << "9 - Recebimento de Veiculo." << endl;
+        cout << "10 - Sair" << endl;
         
         cin >> option;
         
@@ -71,20 +72,23 @@ int main(){
                 viewAll();
                 break;
             case 6:
-                viewAvaliables();
+                viewAvailability("Disponível");
                 break;
             case 7:
+                viewAvailability("Indisponível");
+                break;
+            case 8:
                 cout << "Digite o id do veículo a ser locado:" << endl;
                 cin >> id;
                 veichileRental(id);
                 break;
-            case 8:
+            case 9:
                 cout << "Digite o id do veículo a ser recebido:" << endl;
                 cin >> id;
                 receiveVehicles(id);
                 break;
         }
         
-    } while(option != 9);
+    } while(option != 10);
 }
 
