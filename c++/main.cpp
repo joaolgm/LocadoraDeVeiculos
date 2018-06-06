@@ -1,14 +1,14 @@
 #include <iostream>
 #include <stdio.h>
 #include "inventory.cpp"
-
+#include <string.h>
 using namespace std;
 
 int main(){
     
     int option = 0;
     int vehicles = 0;
-    int MAXVEHICLES = 50; 
+    int MAXVEHICLES = 50;
     string id, year, type, model, state;
     
     cout << "Bem vindo!" << endl;
@@ -20,12 +20,13 @@ int main(){
         cout << "3 - Visualizar veículo do inventário." << endl;
         cout << "4 - Atualizar veículo do inventário." << endl;
         cout << "5 - Listar todos os veículos do inventário." << endl;
-        cout << "6 - Realizar Locação de Veículo." << endl;
-        cout << "7 - Recebimento de Veiculo." << endl;
-        cout << "8 - Sair" << endl;
-
+        cout << "6 - Listar os veículos disponíveis." << endl;
+        cout << "7 - Realizar Locação de Veículo." << endl;
+        cout << "8 - Recebimento de Veiculo." << endl;
+        cout << "9 - Sair" << endl;
+        
         cin >> option;
-
+        
         switch (option){
             case 1:
                 if (vehicles > MAXVEHICLES) {
@@ -70,14 +71,20 @@ int main(){
                 viewAll();
                 break;
             case 6:
+                viewAvaliables();
+                break;
+            case 7:
                 cout << "Digite o id do veículo a ser locado:" << endl;
                 cin >> id;
                 veichileRental(id);
-            case 7:
+                break;
+            case 8:
                 cout << "Digite o id do veículo a ser recebido:" << endl;
                 cin >> id;
                 receiveVehicles(id);
+                break;
         }
-    
-    } while(option != 8);
+        
+    } while(option != 9);
 }
+

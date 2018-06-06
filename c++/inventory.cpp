@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdio.h>
+#include <string.h>
 
 using namespace std;
 
@@ -16,7 +17,7 @@ int i, j, k;
  * @param Ano do veiculo
  * @param Tipo do veiculo
  * @param Modelo do veiculo
-*/
+ */
 void addVehicle(string id, string year, string type, string model) {
     ids[vehicles] = id;
     rented[vehicles] = "Disponível";
@@ -132,7 +133,8 @@ void viewAll(){
 
 void veichileRental(string id){
     position = searchVehicle(id);
-    if (strcmp (rented[position], "Disponível") == 0) {
+    string compara = "Disponível";
+    if (strcmp(rented[position].c_str(), compara.c_str()) == 0) {
         rented[position] = "Indisponível";
     }else{
         cout << "O veículo está indisponível para locação" << endl;
@@ -153,6 +155,28 @@ void receiveVehicles(string id){
     }
     
 }
+
+/**
+ * Mostra todos os veiculos disponíveis.
+ *
+ */
+void viewAvaliables(){
+    if(vehicles == 0){
+        cout << "Não existem veiculos disponiveis" << endl;
+    } else {
+        cout << " " << endl;
+        cout << "Veículos Disponíveis: " << endl;
+        cout << " " << endl;
+        string compara = "Disponível";
+        for(k = 0; k < vehicles; k++){
+            if (strcmp(rented[position].c_str(), compara.c_str()) == 0) {
+                cout << "Id: "<< ids[k] << " / Situação: " <<  rented[k] << " / Ano: " << years[k] << " / Tipo: " << types[k] << " / Modelo: " << models[k] << endl;
+            }
+        }
+        cout << " " << endl;
+    }
+}
+
 
 
 
