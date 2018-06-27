@@ -1,73 +1,118 @@
-mostrarMenu :: IO()
-mostrarMenu = do 
+-- Função que mostra menu
+showMenu :: IO()
+showMenu = do 
     putStrLn ("Selecione uma das opcoes abaixo")
-    putStrLn ("1 - Adicionar veiculo ao invetario")
-    putStrLn ("2 - Remover veiculo do inventario")
-    putStrLn ("3 - Visualizar veículo do invetário")
-    putStrLn ("4 - Atualizar veículo do inventário")
-    putStrLn ("5 - Listar todos os veículos do invetário")
-    putStrLn ("6 - Listar os veículos disponíveis")
-    putStrLn ("7 - Listar os veículos indisponíveis")
-    putStrLn ("8 - Realizar locação de veículo")
-    putStrLn ("9 - Recebimento de veículo")
-    putStrLn ("10 - Sair")
+    putStrLn ("1 - Adicionar veículo ao inventário")
+    putStrLn ("2 - Remover veículo do inventário")
+    putStrLn ("3 - Listar todos os veículo do inventário")
 
+-- Função que cria um inventário de tamanho pre determinado e o alimenta com dados nulos
+createInventory :: Int -> [( ( ( (String, String), String), String), String) ]
+createInventory qntd = [ ( ( ( ("N", "0"), "0"), "0"), "0") | y <- [1 .. qntd ]]
 
-criarBD :: Int -> [(String, String)]
-criarBD qntd =
-    [ ("N", "0") | y <- [1 .. qntd ]]
-
-addVehicle :: [(String, String)] -> (String, String) -> Int -> Int -> [(String, String)]
+-- Função que adiciona uma n-tupla (veiculo) ao inventário
+addVehicle :: [( ( ( (String, String), String), String), String)] -> ( ( ( (String, String), String), String), String) -> Int -> Int -> [( ( ( (String, String), String), String), String)]
 addVehicle [] _ _ _ = []
-addVehicle ((a,b):xs) vehicle count col
+addVehicle ( ( ( ( (a,b), c), d), e):xs) vehicle count col
     | count == col = [vehicle] ++ (addVehicle xs vehicle count (col+1))
-    | otherwise = [(a, b)] ++ (addVehicle xs vehicle count (col+1))
+    | otherwise = [( ( ( (a,b), c), d), e)] ++ (addVehicle xs vehicle count (col+1))
 
-remove :: [(String, String)] -> String -> Int -> [(String, String)]
-remove _ _ 0 = []
-remove ((a,b):xs) id count
-    | id == a = (remove xs id (count-1))
-    | otherwise = [(a, b)] ++ (remove xs id (count-1))
+-- Função que remove uma n-tupla (veiculo) do inventário
+removeVehicle :: [( ( ( (String, String), String), String), String)] -> String -> Int -> [( ( ( (String, String), String), String), String)]
+removeVehicle _ _ 0 = []
+removeVehicle ( ( ( ( (a,b), c), d), e):xs) idRemoval count
+    | idRemoval == a = (removeVehicle xs idRemoval (count-1))
+    | otherwise = [( ( ( (a,b), c), d), e)] ++ (removeVehicle xs idRemoval (count-1))
 
-imprimirTauleiro :: [(String, String)] -> Int -> IO()
-imprimirTauleiro _ 0 = putStrLn("")
-imprimirTauleiro (a:xs) cont = do
-    if(fst a == "N") then do
-        imprimirTauleiro (xs) (cont-1)
+-- Função que exibe ao usuário todos os veículos do inventário
+listAll :: [( ( ( (String, String), String), String), String)] -> Int -> IO()
+listAll _ 0 = putStrLn("")
+listAll (a:xs) cont = do
+    if( (fst (fst (fst (fst a)))) == "N") then do
+        listAll (xs) (cont-1)
     else do
-        print a
-    imprimirTauleiro (xs) (cont-1)
+        let id_print = (fst (fst (fst (fst a))))
+        let type_print = (snd (fst (fst (fst a))))
+        let model_print = (snd (fst (fst a)))
+        let year_print = (snd (fst a))
+        let situation_print = (snd a)
+        putStrLn("ID: " ++ id_print ++ " / Tipo: " ++ type_print ++ " / Modelo: " ++ model_print ++ " / Ano de fabricação: " ++ year_print ++ " / Situação: " ++ situation_print)
+    listAll (xs) (cont-1)
 
-iniciarJogo :: [(String, String)] -> Int -> IO ()
-iniciarJogo bd count = do
-    
-    mostrarMenu
-    opcao <- getLine
-    if (opcao == "1") then do
-        entrada1 <- getLine
-        entrada2 <- getLine
-        let a = addVehicle bd (entrada1, entrada2) count 0
-        let count1 = count + 1
-        print a
-        iniciarJogo a count1
+-- Função que inicializa o inventário a cada chamada do main
+initiateInvetory :: [( ( ( (String, String), String), String), String)] -> Int -> IO ()
+initiateInvetory inventory count = do
 
-        putStrLn $ "Saindo..."
+    showMenu
+    option <- getLine
+
+    -- Opção de adição de veículo
+    if (option == "1") then do
+        putStrLn ("")
+        putStrLn ("Você escolheu a opção para adicionar veículo ao inventário.")
+        putStrLn ("Digite o ID do novo veículo:")
+        id_ <- getLine
+        putStrLn ("Digite o tipo do novo veículo:")
+        type_ <- getLine
+        putStrLn ("Digite o modelo do novo veículo:")
+        model_ <- getLine
+        putStrLn ("Digite o ano de fabricação do novo veículo:")
+        year_ <- getLine
+        putStrLn ("")
+
+        let inventoryUpgrade = addVehicle inventory ( ( ( (id_, type_), model_), year_), "Disponivel" ) count 0
+
+        let countUpgrade = count + 1
+
+        initiateInvetory inventoryUpgrade countUpgrade
+
     else do 
-        if(opcao == "2") then do
-            imprimirTauleiro bd count
-            iniciarJogo bd count
+
+        -- Opção de remoção de veículo
+        if(option == "2") then do
+
+            if(count == 0) then do
+                putStrLn ("")
+                putStrLn ("Inventário vazio, escolha outra opção.")
+                putStrLn ("")
+                initiateInvetory inventory count
+            else do
+                putStrLn ("")
+                putStrLn ("Você escolheu a opção para remover veículo do inventário.")
+                putStrLn ("Digite o ID do veículo a ser removido:")
+                idRemoval <- getLine
+
+                let inventoryDowngrade = removeVehicle inventory idRemoval (length inventory)
+
+                let countDowngrade = count - 1
+
+                initiateInvetory inventoryDowngrade countDowngrade
+
         else do
-            id <- getLine
-            let a = remove bd id (length bd)
-            print a
-            putStrLn $ "Voce digitou uma opacaoinvalida. Tente Novamente..."
-            iniciarJogo a count
 
+            -- Opção para listar todos os veículos
+            if(option == "3") then do
 
+                if(count == 0) then do
+                    putStrLn ("")
+                    putStrLn ("Inventário vazio, escolha outra opção.")
+                    putStrLn ("")
+                    initiateInvetory inventory count
+                else do
+                    putStrLn ("")
+                    putStrLn ("Inventário:")
+                    putStrLn ("")
+                    listAll inventory count
+                    initiateInvetory inventory count
+
+            else do
+                putStrLn ("Você escolheu uma opção inválida, escolha outra opção.")
+                initiateInvetory inventory count
+
+-- Função Main
 main :: IO ()
 main = do
-    let bd = criarBD 50
+    let size = 100
+    let inventory = createInventory size
     let count = 0
-    iniciarJogo bd count
-    putStrLn ("10 - Sair")
-
+    initiateInvetory inventory count
