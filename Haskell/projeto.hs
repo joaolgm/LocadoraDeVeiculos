@@ -5,6 +5,9 @@ showMenu = do
     putStrLn ("1 - Adicionar veículo ao inventário")
     putStrLn ("2 - Remover veículo do inventário")
     putStrLn ("3 - Listar todos os veículo do inventário")
+    putStrLn ("4 - Listar todos os veículos Disponíveis")
+    putStrLn ("5 - Listar todos os veículos Indisponíveis")
+
 
 -- Função que cria um inventário de tamanho pre determinado e o alimenta com dados nulos
 createInventory :: Int -> [( ( ( (String, String), String), String), String) ]
@@ -38,6 +41,36 @@ listAll (a:xs) cont = do
         let situation_print = (snd a)
         putStrLn("ID: " ++ id_print ++ " / Tipo: " ++ type_print ++ " / Modelo: " ++ model_print ++ " / Ano de fabricação: " ++ year_print ++ " / Situação: " ++ situation_print)
     listAll (xs) (cont-1)
+
+-- Função que exibe ao usuário todos os veículos disponiveis do inventário
+availables :: [( ( ( (String, String), String), String), String)] -> Int -> IO()
+availables _ 0 = putStrLn("")
+availables (a:xs) cont = do
+    if((snd a) == "Indisponivel") then do
+        availables (xs) (cont-1)
+    else do
+        let id_print = (fst (fst (fst (fst a))))
+        let type_print = (snd (fst (fst (fst a))))
+        let model_print = (snd (fst (fst a)))
+        let year_print = (snd (fst a))
+        let situation_print = (snd a)
+        putStrLn("ID: " ++ id_print ++ " / Tipo: " ++ type_print ++ " / Modelo: " ++ model_print ++ " / Ano de fabricação: " ++ year_print ++ " / Situação: " ++ situation_print)
+    availables (xs) (cont-1)
+
+-- Função que exibe ao usuário todos os veículos indisponíveis do inventário
+unavailables :: [( ( ( (String, String), String), String), String)] -> Int -> IO()
+unavailables _ 0 = putStrLn("")
+unavailables (a:xs) cont = do
+    if((snd a) == "Disponivel") then do
+        unavailables (xs) (cont-1)
+    else do
+        let id_print = (fst (fst (fst (fst a))))
+        let type_print = (snd (fst (fst (fst a))))
+        let model_print = (snd (fst (fst a)))
+        let year_print = (snd (fst a))
+        let situation_print = (snd a)
+        putStrLn("ID: " ++ id_print ++ " / Tipo: " ++ type_print ++ " / Modelo: " ++ model_print ++ " / Ano de fabricação: " ++ year_print ++ " / Situação: " ++ situation_print)
+    unavailables (xs) (cont-1)
 
 -- Função que inicializa o inventário a cada chamada do main
 initiateInvetory :: [( ( ( (String, String), String), String), String)] -> Int -> IO ()
@@ -106,8 +139,42 @@ initiateInvetory inventory count = do
                     initiateInvetory inventory count
 
             else do
-                putStrLn ("Você escolheu uma opção inválida, escolha outra opção.")
-                initiateInvetory inventory count
+
+                -- Opção para listar todos os veículos
+                if(option == "4") then do
+
+                    if(count == 0) then do
+                        putStrLn ("")
+                        putStrLn ("Inventário vazio, escolha outra opção.")
+                        putStrLn ("")
+                        initiateInvetory inventory count
+                    else do
+                        putStrLn ("")
+                        putStrLn ("Veículos Disponíveis:")
+                        putStrLn ("")
+                        availables inventory count
+                        initiateInvetory inventory count
+
+                else do
+
+                    -- Opção para listar todos os veículos
+                    if(option == "5") then do
+
+                        if(count == 0) then do
+                            putStrLn ("")
+                            putStrLn ("Inventário vazio, escolha outra opção.")
+                            putStrLn ("")
+                            initiateInvetory inventory count
+                        else do
+                            putStrLn ("")
+                            putStrLn ("Veículos Indisponíveis:")
+                            putStrLn ("")
+                            unavailables inventory count
+                            initiateInvetory inventory count
+
+                    else do
+                        putStrLn ("Você escolheu uma opção inválida, escolha outra opção.")
+                        initiateInvetory inventory count
 
 -- Função Main
 main :: IO ()
