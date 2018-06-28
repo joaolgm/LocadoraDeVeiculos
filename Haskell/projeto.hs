@@ -7,6 +7,8 @@ showMenu = do
     putStrLn ("3 - Listar todos os veículo do inventário")
     putStrLn ("4 - Listar todos os veículos Disponíveis")
     putStrLn ("5 - Listar todos os veículos Indisponíveis")
+    putStrLn ("6 - Alugar veículo")
+    putStrLn ("7 - Devolver veículo")
 
 
 -- Função que cria um inventário de tamanho pre determinado e o alimenta com dados nulos
@@ -71,6 +73,20 @@ unavailables (a:xs) cont = do
         let situation_print = (snd a)
         putStrLn("ID: " ++ id_print ++ " / Tipo: " ++ type_print ++ " / Modelo: " ++ model_print ++ " / Ano de fabricação: " ++ year_print ++ " / Situação: " ++ situation_print)
     unavailables (xs) (cont-1)
+
+    --Funcao que retorna os atributos do veiculo
+getVehicle :: [( ( ( (String, String), String), String), String)] -> Int -> String -> [String]
+getVehicle (a:xs) cont id = do
+    if((fst (fst (fst (fst a)))) == id) then do
+        let vehicle = []
+        let id_print = (fst (fst (fst (fst a))))
+        let type_print = (snd (fst (fst (fst a))))
+        let model_print = (snd (fst (fst a)))
+        let year_print = (snd (fst a))
+        let situation_print = (snd a)                 
+        vehicle ++ [id_print] ++ [type_print] ++ [model_print]  ++ [year_print]  ++ [situation_print]
+    else do 
+        getVehicle (xs) (cont-1) id
 
 -- Função que inicializa o inventário a cada chamada do main
 initiateInvetory :: [( ( ( (String, String), String), String), String)] -> Int -> IO ()
@@ -173,8 +189,47 @@ initiateInvetory inventory count = do
                             initiateInvetory inventory count
 
                     else do
-                        putStrLn ("Você escolheu uma opção inválida, escolha outra opção.")
-                        initiateInvetory inventory count
+                        if(option == "6") then do
+
+                            if(count == 0) then do
+                                putStrLn ("")
+                                putStrLn ("Inventário vazio, escolha outra opção.")
+                                putStrLn ("")
+                                initiateInvetory inventory count
+                            else do
+                                putStrLn ("Digite o ID do veículo a ser alugado:")
+                                id <- getLine
+                                putStrLn ("")
+                                
+                                let vehicle = getVehicle inventory count id
+                                                               
+                                let inventoryRem = removeVehicle inventory id (length inventory)                       
+                                let inventoryAdd = addVehicle inventoryRem ((((vehicle !! 0, vehicle !! 1), vehicle !! 2),vehicle !! 3), "Indisponivel" ) count 1
+                                                              
+                                initiateInvetory inventoryAdd count
+                        else do
+                            if(option == "7") then do
+
+                                if(count == 0) then do
+                                    putStrLn ("")
+                                    putStrLn ("Inventário vazio, escolha outra opção.")
+                                    putStrLn ("")
+                                    initiateInvetory inventory count
+                                    
+                                else do
+                                    putStrLn ("Digite o ID do veículo a ser devolvido:")
+                                    id <- getLine
+                                    putStrLn ("")
+                                    
+                                    let vehicle = getVehicle inventory count id
+                                                                        
+                                    let inventoryRem = removeVehicle inventory id (length inventory)                                    
+                                    let inventoryAdd = addVehicle inventoryRem ((((vehicle !! 0, vehicle !! 1), vehicle !! 2),vehicle !! 3), "Disponivel" ) count 1
+                                                                            
+                                    initiateInvetory inventoryAdd count
+                            else do
+                                putStrLn ("Você escolheu uma opção inválida, escolha outra opção.")
+                                initiateInvetory inventory count
 
 -- Função Main
 main :: IO ()
