@@ -4,11 +4,13 @@ showMenu = do
     putStrLn ("Selecione uma das opcoes abaixo")
     putStrLn ("1 - Adicionar veículo ao inventário")
     putStrLn ("2 - Remover veículo do inventário")
-    putStrLn ("3 - Listar todos os veículo do inventário")
-    putStrLn ("4 - Listar todos os veículos Disponíveis")
-    putStrLn ("5 - Listar todos os veículos Indisponíveis")
-    putStrLn ("6 - Alugar veículo")
-    putStrLn ("7 - Devolver veículo")
+    putStrLn ("3 - Visualizar veículo")
+    putStrLn ("4 - Listar todos os veículo do inventário")
+    putStrLn ("5 - Listar todos os veículos Disponíveis")
+    putStrLn ("6 - Listar todos os veículos Indisponíveis")
+    putStrLn ("7 - Alugar veículo")
+    putStrLn ("8 - Devolver veículo")
+    
 
 
 -- Função que cria um inventário de tamanho pre determinado e o alimenta com dados nulos
@@ -139,8 +141,8 @@ initiateInvetory inventory count = do
 
         else do
 
-            -- Opção para listar todos os veículos
-            if(option == "3") then do
+            -- Opção para listar todos os veículos 
+            if(option == "4") then do
 
                 if(count == 0) then do
                     putStrLn ("")
@@ -156,8 +158,8 @@ initiateInvetory inventory count = do
 
             else do
 
-                -- Opção para listar todos os veículos
-                if(option == "4") then do
+                -- Opção para listar todos os veículos disponiveis
+                if(option == "5") then do
 
                     if(count == 0) then do
                         putStrLn ("")
@@ -173,8 +175,8 @@ initiateInvetory inventory count = do
 
                 else do
 
-                    -- Opção para listar todos os veículos
-                    if(option == "5") then do
+                    -- Opção para listar todos os veículos indisponiveis
+                    if(option == "6") then do
 
                         if(count == 0) then do
                             putStrLn ("")
@@ -189,7 +191,8 @@ initiateInvetory inventory count = do
                             initiateInvetory inventory count
 
                     else do
-                        if(option == "6") then do
+                        -- Opção para alugar um veículo
+                        if(option == "7") then do
 
                             if(count == 0) then do
                                 putStrLn ("")
@@ -208,7 +211,8 @@ initiateInvetory inventory count = do
                                                               
                                 initiateInvetory inventoryAdd count
                         else do
-                            if(option == "7") then do
+                            -- Opção para devolver um veículo
+                            if(option == "8") then do
 
                                 if(count == 0) then do
                                     putStrLn ("")
@@ -228,6 +232,28 @@ initiateInvetory inventory count = do
                                                                             
                                     initiateInvetory inventoryAdd count
                             else do
+                                -- Opção para visualizar um veículo
+                                if(option == "3") then do
+
+                                    if(count == 0) then do
+                                        putStrLn ("")
+                                        putStrLn ("Inventário vazio, escolha outra opção.")
+                                        putStrLn ("")
+                                        initiateInvetory inventory count
+                                        
+                                    else do
+                                        putStrLn ("Digite o ID do veículo a ser visualizado:")
+                                        id <- getLine
+                                        putStrLn ("")
+                                        
+                                        let vehicle = getVehicle inventory count id
+                                                                            
+                                        putStrLn("ID: " ++ vehicle !! 0 ++ " / Tipo: " ++ vehicle !! 1 ++ " / Modelo: " ++ vehicle !! 2 ++ " / Ano de fabricação: " ++ vehicle !! 3 ++ " / Situação: " ++ vehicle !! 4)                                    
+                                        putStrLn ("")                                                                               
+                                        
+                                        initiateInvetory inventory count
+                                
+                                else do
                                 putStrLn ("Você escolheu uma opção inválida, escolha outra opção.")
                                 initiateInvetory inventory count
 
