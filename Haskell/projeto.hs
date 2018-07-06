@@ -10,6 +10,8 @@ showMenu = do
     putStrLn ("6 - Listar todos os veículos Indisponíveis")
     putStrLn ("7 - Alugar veículo")
     putStrLn ("8 - Devolver veículo")
+    putStrLn ("")
+    putStrLn ("Digite a opção a ser escolhida: ")
     
 
 
@@ -109,8 +111,9 @@ initiateInvetory inventory count = do
         model_ <- getLine
         putStrLn ("Digite o ano de fabricação do novo veículo:")
         year_ <- getLine
-        putStrLn ("")
-
+	putStrLn ("")
+        putStrLn ("-----------Adicionado com sucesso!-------------")
+	putStrLn ("")
         let inventoryUpgrade = addVehicle inventory ( ( ( (id_, type_), model_), year_), "Disponivel" ) count 0
 
         let countUpgrade = count + 1
@@ -138,6 +141,7 @@ initiateInvetory inventory count = do
                 let countDowngrade = count - 1
 
                 initiateInvetory inventoryDowngrade countDowngrade
+		putStrLn ("-----------Removido com sucesso!-------------")
 
         else do
 
@@ -151,7 +155,7 @@ initiateInvetory inventory count = do
                     initiateInvetory inventory count
                 else do
                     putStrLn ("")
-                    putStrLn ("Inventário:")
+                    putStrLn ("Inventário: ")
                     putStrLn ("")
                     listAll inventory count
                     initiateInvetory inventory count
@@ -168,7 +172,7 @@ initiateInvetory inventory count = do
                         initiateInvetory inventory count
                     else do
                         putStrLn ("")
-                        putStrLn ("Veículos Disponíveis:")
+                        putStrLn ("Veículos Disponíveis: ")
                         putStrLn ("")
                         availables inventory count
                         initiateInvetory inventory count
@@ -203,13 +207,14 @@ initiateInvetory inventory count = do
                                 putStrLn ("Digite o ID do veículo a ser alugado:")
                                 id <- getLine
                                 putStrLn ("")
-                                
+                                putStrLn ("-----------Veiculo alugado com sucesso!-------------")
                                 let vehicle = getVehicle inventory count id
                                                                
                                 let inventoryRem = removeVehicle inventory id (length inventory)                       
                                 let inventoryAdd = addVehicle inventoryRem ((((vehicle !! 0, vehicle !! 1), vehicle !! 2),vehicle !! 3), "Indisponivel" ) count 1
                                                               
                                 initiateInvetory inventoryAdd count
+				
                         else do
                             -- Opção para devolver um veículo
                             if(option == "8") then do
@@ -224,13 +229,14 @@ initiateInvetory inventory count = do
                                     putStrLn ("Digite o ID do veículo a ser devolvido:")
                                     id <- getLine
                                     putStrLn ("")
-                                    
+                                    putStrLn ("-----------Devolução realizada com sucesso!-------------")
                                     let vehicle = getVehicle inventory count id
                                                                         
                                     let inventoryRem = removeVehicle inventory id (length inventory)                                    
                                     let inventoryAdd = addVehicle inventoryRem ((((vehicle !! 0, vehicle !! 1), vehicle !! 2),vehicle !! 3), "Disponivel" ) count 1
                                                                             
                                     initiateInvetory inventoryAdd count
+				    
                             else do
                                 -- Opção para visualizar um veículo
                                 if(option == "3") then do
