@@ -91,6 +91,7 @@ getVehicle (a:xs) cont id = do
         getVehicle (xs) (cont-1) id
 
 -- Função que inicializa o inventário a cada chamada do main
+
 initiateInvetory :: [( ( ( (String, String), String), String), String)] -> Int -> IO ()
 initiateInvetory inventory count = do
 
