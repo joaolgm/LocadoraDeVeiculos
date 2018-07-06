@@ -31,21 +31,6 @@ removeVehicle ( ( ( ( (a,b), c), d), e):xs) idRemoval count
     | idRemoval == a = (removeVehicle xs idRemoval (count-1))
     | otherwise = [( ( ( (a,b), c), d), e)] ++ (removeVehicle xs idRemoval (count-1))
 
--- Função que exibe ao usuário todos os veículos do inventário
-listAll :: [( ( ( (String, String), String), String), String)] -> Int -> IO()
-listAll _ 0 = putStrLn("")
-listAll (a:xs) cont = do
-    if( (fst (fst (fst (fst a)))) == "N") then do
-        listAll (xs) (cont-1)
-    else do
-        let id_print = (fst (fst (fst (fst a))))
-        let type_print = (snd (fst (fst (fst a))))
-        let model_print = (snd (fst (fst a)))
-        let year_print = (snd (fst a))
-        let situation_print = (snd a)
-        putStrLn("ID: " ++ id_print ++ " / Tipo: " ++ type_print ++ " / Modelo: " ++ model_print ++ " / Ano de fabricação: " ++ year_print ++ " / Situação: " ++ situation_print)
-    listAll (xs) (cont-1)
-
 -- Função que exibe ao usuário todos os veículos disponiveis do inventário
 availables :: [( ( ( (String, String), String), String), String)] -> Int -> IO()
 availables _ 0 = putStrLn("")
@@ -76,6 +61,21 @@ unavailables (a:xs) cont = do
         putStrLn("ID: " ++ id_print ++ " / Tipo: " ++ type_print ++ " / Modelo: " ++ model_print ++ " / Ano de fabricação: " ++ year_print ++ " / Situação: " ++ situation_print)
     unavailables (xs) (cont-1)
 
+-- Função que exibe ao usuário todos os veículos do inventário
+listAll :: [( ( ( (String, String), String), String), String)] -> Int -> IO()
+listAll _ 0 = putStrLn("")
+listAll (a:xs) cont = do
+    if( (fst (fst (fst (fst a)))) == "N") then do
+        listAll (xs) (cont-1)
+    else do
+        let id_print = (fst (fst (fst (fst a))))
+        let type_print = (snd (fst (fst (fst a))))
+        let model_print = (snd (fst (fst a)))
+        let year_print = (snd (fst a))
+        let situation_print = (snd a)
+        putStrLn("ID: " ++ id_print ++ " / Tipo: " ++ type_print ++ " / Modelo: " ++ model_print ++ " / Ano de fabricação: " ++ year_print ++ " / Situação: " ++ situation_print)
+    listAll (xs) (cont-1)
+
     --Funcao que retorna os atributos do veiculo
 getVehicle :: [( ( ( (String, String), String), String), String)] -> Int -> String -> [String]
 getVehicle (a:xs) cont id = do
@@ -91,7 +91,6 @@ getVehicle (a:xs) cont id = do
         getVehicle (xs) (cont-1) id
 
 -- Função que inicializa o inventário a cada chamada do main
-
 initiateInvetory :: [( ( ( (String, String), String), String), String)] -> Int -> IO ()
 initiateInvetory inventory count = do
 
