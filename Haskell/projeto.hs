@@ -5,7 +5,7 @@ showMenu = do
     putStrLn ("1 - Adicionar veículo ao inventário")
     putStrLn ("2 - Remover veículo do inventário")
     putStrLn ("3 - Visualizar veículo")
-    putStrLn ("4 - Listar todos os veículo do inventário")
+    putStrLn ("4 - Listar todos os veículos do inventário")
     putStrLn ("5 - Listar todos os veículos Disponíveis")
     putStrLn ("6 - Listar todos os veículos Indisponíveis")
     putStrLn ("7 - Alugar veículo")
