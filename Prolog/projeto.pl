@@ -68,13 +68,21 @@ verificaVeiculo(Id),
 veiculo(Id, Tipo, Modelo, Ano),
 realizaAluguel(Id, Tipo, Modelo, Ano).
 
+receberVeiculo() :- writeln("Insira o ID do veiculo a ser devolvido:"),
+read(Id),
+verificaVeiculo(Id),
+veiculo(Id, Tipo, Modelo, Ano),
+realizaDevolucao(Id, Tipo, Modelo, Ano).
+
 verificaVeiculo(Id) :- call(veiculo(Id,_,_,_)), !;
 call(locado(veiculo(Id,_,_,_))), !;
-writeln("Veículo não consta no inventário.").
+writeln("Veiculo não consta no inventário.").
 
 realizaAluguel(Id, Tipo, Modelo, Ano) :- assertz(locado(veiculo(Id, Tipo, Modelo, Ano))),
-write("Veículo alugado com sucesso.").
+write("Veiculo alugado com sucesso.").
 
+realizaDevolucao(Id, Tipo, Modelo, Ano) :- retract(locado(veiculo(Id, Tipo, Modelo, Ano))),
+write("Veiculo devolvido com sucesso.").
 
 opcao(1) :- writeln("Voce selecionou a opcao para listar todos os veiculos do inventario."),
 imprimeVeiculos().
@@ -105,7 +113,8 @@ listaVeiculosIndisponiveis().
 opcao(5) :- writeln("Voce selecionou a opcao para locar um veiculo."),
 alugarVeiculo().
 
-opcao(6) :- writeln("Voce selecionou a opcao para receber um veiculo."). % Preciso que alguém faça
+opcao(6) :- writeln("Voce selecionou a opcao para receber um veiculo."),
+receberVeiculo().
 
 menuOpcoes() :-
 writeln("\nSelecione uma das opcoes abaixo:"),
@@ -121,5 +130,3 @@ menuOpcoes().
 
 main :-
 menuOpcoes().
-
-
