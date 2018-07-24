@@ -11,34 +11,74 @@ veiculo(5, "Carro", "Corsa", "2000").
 veiculo(6, "Carro", "Ferrari", "2010").
 veiculo(7, "Carro", "Mclaren", "2010").
 veiculo(8, "Moto", "Shineray", "1995").
-veiculo(9, "Moto", "Honda", "2006").
+veiculo(9, "Carro", "Honda", "2006").
+veiculo(10, "Carro", "Civic", "2018").
+veiculo(11, "Carro", "Logan", "2016").
+veiculo(12, "Moto", "Evoque", "2018").
+veiculo(13, "Carro", "Polo", "2018").
+veiculo(14, "Carro", "CRV", "2008").
+veiculo(15, "Carro", "Uno", "2011").
 
 imprimeVeiculos() :- findall(Modelo, veiculo(_,_,Modelo,_), Veiculos),
 listaVeiculos(Veiculos, 001).
 
 listaVeiculos([], _).
-listaVeiculos([H|T], ID) :-  veiculo(C,_,H,_),
-write(C),
-write(" - "),
-writeln(H),
+listaVeiculos([H|T], ID) :-  veiculo(Id,Tipo,H,Ano),
+write("ID: "),
+write(Id),
+write("/"),
+write(" Tipo: "),
+write(Tipo),
+write("/"),
+write(" Modelo: "),
+write(H),
+write("/"),
+write(" Ano: "),
+writeln(Ano),
 ID_Prox is ID + 1,
 listaVeiculos(T, ID_Prox).
 
-listaVeiculosDisponiveis():- findall(Modelo, veiculo(_,_,Modelo,_), Veiculos),
+listaVeiculosDisponiveis():- writeln("Veiculos Disponiveis:"),
+findall(Modelo, veiculo(_,_,Modelo,_), Veiculos),
 imprimeVeiculosDisponiveis(Veiculos).
 
 imprimeVeiculosDisponiveis([]).
-imprimeVeiculosDisponiveis([H|T]):- not(locado(veiculo(_,_,H,_))) ->
-veiculo(C,_,H,_),
-write(C),
-write(" - "),
-writeln(H),
+imprimeVeiculosDisponiveis([H|T]):- not(locado(veiculo(Id,Tipo,H,Ano))) ->
+veiculo(Id,Tipo,H,Ano),
+write("ID: "),
+write(Id),
+write("/"),
+write(" Tipo: "),
+write(Tipo),
+write("/"),
+write(" Modelo: "),
+write(H),
+write("/"),
+write(" Ano: "),
+writeln(Ano),
 imprimeVeiculosDisponiveis(T) ;
 imprimeVeiculosDisponiveis(T) .
 
-listaVeiculosIndisponiveis() :- writeln("Veiculos Indisponiveis:"),
-forall(locado(Veiculo),
-writeln(Veiculo)).
+imprimeVeiculosIndisponiveis([]).
+imprimeVeiculosIndisponiveis([H|T]):- locado(veiculo(Id,Tipo,H,Ano)) ->
+veiculo(Id,Tipo,H,Ano),
+write("ID: "),
+write(Id),
+write("/"),
+write(" Tipo: "),
+write(Tipo),
+write("/"),
+write(" Modelo: "),
+write(H),
+write("/"),
+write(" Ano: "),
+writeln(Ano),
+imprimeVeiculosIndisponiveis(T) ;
+imprimeVeiculosIndisponiveis(T) .
+
+listaVeiculosIndisponiveis():- writeln("Veiculos Indisponiveis:"),
+findall(Modelo, veiculo(_,_,Modelo,_), Veiculos),
+imprimeVeiculosIndisponiveis(Veiculos).
 
 alugarVeiculo() :- writeln("Insira o ID do veiculo a ser alugado:"),
 read(Id),
@@ -58,15 +98,19 @@ opcao(1) :- writeln("Voce selecionou a opcao para listar todos os veiculos do in
 imprimeVeiculos().
 
 opcao(2) :- writeln("Voce selecionou a opcao para listar um veiculo do inventario."),
+write("Digite o ID do veiculo a ser visualizado: "),
 read(Id),
 verificaVeiculo(Id),
 veiculo(Id, Tipo, Modelo, Ano),
 write("ID: "),
 write(Id),
+write("/"),
 write(" Tipo: "),
 write(Tipo),
+write("/"),
 write(" Modelo: "),
 write(Modelo),
+write("/"),
 write(" Ano: "),
 writeln(Ano).
 
