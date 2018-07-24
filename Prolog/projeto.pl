@@ -24,7 +24,11 @@ listaVeiculos(Veiculos, 001).
 
 listaVeiculos([], _).
 listaVeiculos([H|T], ID) :-  veiculo(Id,Tipo,H,Ano),
-write("ID: "),
+exibirInformacoes(Id,Tipo,H,Ano),
+ID_Prox is ID + 1,
+listaVeiculos(T, ID_Prox).
+
+exibirInformacoes(Id,Tipo,H,Ano) :- write("ID: "),
 write(Id),
 write("/"),
 write(" Tipo: "),
@@ -34,9 +38,7 @@ write(" Modelo: "),
 write(H),
 write("/"),
 write(" Ano: "),
-writeln(Ano),
-ID_Prox is ID + 1,
-listaVeiculos(T, ID_Prox).
+writeln(Ano).
 
 listaVeiculosDisponiveis():- writeln("Veiculos Disponiveis:"),
 findall(Modelo, veiculo(_,_,Modelo,_), Veiculos),
@@ -45,34 +47,14 @@ imprimeVeiculosDisponiveis(Veiculos).
 imprimeVeiculosDisponiveis([]).
 imprimeVeiculosDisponiveis([H|T]):- not(locado(veiculo(Id,Tipo,H,Ano))) ->
 veiculo(Id,Tipo,H,Ano),
-write("ID: "),
-write(Id),
-write("/"),
-write(" Tipo: "),
-write(Tipo),
-write("/"),
-write(" Modelo: "),
-write(H),
-write("/"),
-write(" Ano: "),
-writeln(Ano),
+exibirInformacoes(Id,Tipo,H,Ano),
 imprimeVeiculosDisponiveis(T) ;
 imprimeVeiculosDisponiveis(T) .
 
 imprimeVeiculosIndisponiveis([]).
 imprimeVeiculosIndisponiveis([H|T]):- locado(veiculo(Id,Tipo,H,Ano)) ->
 veiculo(Id,Tipo,H,Ano),
-write("ID: "),
-write(Id),
-write("/"),
-write(" Tipo: "),
-write(Tipo),
-write("/"),
-write(" Modelo: "),
-write(H),
-write("/"),
-write(" Ano: "),
-writeln(Ano),
+exibirInformacoes(Id,Tipo,H,Ano),
 imprimeVeiculosIndisponiveis(T) ;
 imprimeVeiculosIndisponiveis(T) .
 
