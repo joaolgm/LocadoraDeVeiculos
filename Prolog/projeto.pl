@@ -3,21 +3,26 @@
 :- dynamic
 locado(veiculo(_,_,_,_)).
 
-veiculo(1, "Carro", "Celta", "2010").
-veiculo(2, "Carro", "Palio", "2002").
-veiculo(3, "Carro", "Hilux", "2007").
-veiculo(4, "Carro", "S10", "2018").
-veiculo(5, "Carro", "Corsa", "2000").
-veiculo(6, "Carro", "Ferrari", "2010").
-veiculo(7, "Carro", "Mclaren", "2010").
-veiculo(8, "Moto", "Shineray", "1995").
-veiculo(9, "Carro", "Honda", "2006").
-veiculo(10, "Carro", "Civic", "2018").
-veiculo(11, "Carro", "Logan", "2016").
-veiculo(12, "Moto", "Evoque", "2018").
-veiculo(13, "Carro", "Polo", "2018").
-veiculo(14, "Carro", "CRV", "2008").
-veiculo(15, "Carro", "Uno", "2011").
+veiculo(1, "Comum", "Celta", "2010").
+veiculo(2, "Comum", "Palio", "2002").
+veiculo(3, "Picape", "Hilux", "2007").
+veiculo(4, "Picape", "S10", "2018").
+veiculo(5, "Comum", "Corsa", "2000").
+veiculo(6, "Esportivo", "Ferrari", "2010").
+veiculo(7, "Esportivo", "Mclaren", "2010").
+veiculo(8, "Motocicleta", "Shineray", "1995").
+veiculo(9, "Sedan", "Honda", "2006").
+veiculo(10, "Sedan", "Civic", "2018").
+veiculo(11, "Sedan", "Logan", "2016").
+veiculo(12, "SUV", "Evoque", "2018").
+veiculo(13, "Comum", "Polo", "2018").
+veiculo(14, "SUV", "CRV", "2008").
+veiculo(15, "Comum", "Uno", "2011").
+veiculo(16, "Comum", "Gol", "2015").
+veiculo(17, "SUV", "Kics", "2018").
+veiculo(18, "Sedan", "Corolla", "2016").
+veiculo(19, "SUV", "Equinox", "2018").
+veiculo(20, "Sedan", "Cruze", "2013").
 
 imprimeVeiculos() :- findall(Modelo, veiculo(_,_,Modelo,_), Veiculos),
 listaVeiculos(Veiculos, 001).
@@ -116,6 +121,8 @@ alugarVeiculo().
 opcao(6) :- writeln("Voce selecionou a opcao para receber um veiculo."),
 receberVeiculo().
 
+opcao(7) :- halt.
+
 menuOpcoes() :-
 writeln("\nSelecione uma das opcoes abaixo:"),
 writeln("1 - Listar todos os veiculos do inventario."),
@@ -124,9 +131,12 @@ writeln("3 - Listar os veiculos disponiveis."),
 writeln("4 - Listar os veiculos indisponiveis."),
 writeln("5 - Realizar Locacao de Veiculo."),
 writeln("6 - Recebimento de Veiculo."),
+writeln("7 - Sair."),
 read(A),
 opcao(A),
 menuOpcoes().
 
 main :-
 menuOpcoes().
+
+
