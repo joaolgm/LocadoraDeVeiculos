@@ -24,11 +24,13 @@ write("/"),
 write(" Ano: "),
 writeln(Ano).
 
+% Lista todos os veiculos disponiveis no sistema
 listaVeiculosDisponiveis():- writeln("Veiculos Disponiveis:"),
 findall(Modelo, veiculo(_,_,Modelo,_), Veiculos),
 imprimeVeiculosDisponiveis(Veiculos).
 
 imprimeVeiculosDisponiveis([]).
+% Imprime todos os veiculos disponiveis no sistema
 imprimeVeiculosDisponiveis([H|T]):- not(locado(veiculo(Id,Tipo,H,Ano))) ->
 veiculo(Id,Tipo,H,Ano),
 exibirInformacoes(Id,Tipo,H,Ano),
@@ -36,28 +38,33 @@ imprimeVeiculosDisponiveis(T) ;
 imprimeVeiculosDisponiveis(T) .
 
 imprimeVeiculosIndisponiveis([]).
+% Imprime todos os veiculos indisponiveis no sistema
 imprimeVeiculosIndisponiveis([H|T]):- locado(veiculo(Id,Tipo,H,Ano)) ->
 veiculo(Id,Tipo,H,Ano),
 exibirInformacoes(Id,Tipo,H,Ano),
 imprimeVeiculosIndisponiveis(T) ;
 imprimeVeiculosIndisponiveis(T) .
 
+% Lista todos os veiculos indisponiveis no sistema
 listaVeiculosIndisponiveis():- writeln("Veiculos Indisponiveis:"),
 findall(Modelo, veiculo(_,_,Modelo,_), Veiculos),
 imprimeVeiculosIndisponiveis(Veiculos).
 
+% Aluga um veiculo do sistema a partir do ID
 alugarVeiculo() :- writeln("Insira o ID do veiculo a ser alugado:"),
 read(Id),
 verificaVeiculo(Id),
 veiculo(Id, Tipo, Modelo, Ano),
 realizaAluguel(Id, Tipo, Modelo, Ano).
 
+% Recebe um veiculo de volta para o sistema a partir do ID
 receberVeiculo() :- writeln("Insira o ID do veiculo a ser devolvido:"),
 read(Id),
 verificaVeiculo(Id),
 veiculo(Id, Tipo, Modelo, Ano),
 realizaDevolucao(Id, Tipo, Modelo, Ano).
 
+% Verifica dados de algum veiculo a partir do ID
 verificaVeiculo(Id) :- call(veiculo(Id,_,_,_)), !;
 call(locado(veiculo(Id,_,_,_))), !;
 writeln("Veiculo não consta no inventário.").
@@ -68,6 +75,7 @@ write("Veiculo alugado com sucesso.").
 realizaDevolucao(Id, Tipo, Modelo, Ano) :- retract(locado(veiculo(Id, Tipo, Modelo, Ano))),
 write("Veiculo removido com sucesso.").
 
+% Adiciona um veiculo no sistema a partir de seus dados
 adicionarVeiculo() :- write("Digite o id do veiculo a ser adicionado."),
 read(Id),
 write("Digite o tipo do veiculo a ser adicionado."),
@@ -81,6 +89,7 @@ adicionaComParametros(Id, Tipo, Modelo, Ano).
 adicionaComParametros(Id, Tipo, Modelo, Ano) :- assertz(veiculo(Id, Tipo, Modelo, Ano)),
 write("Veiculo adicionado com sucesso").
 
+% Remove um veiculo do sistema a partir do ID
 removerVeiculo() :- write("Digite o id do veiculo a ser removido."),
 read(Id),
 removerComParametro(Id).
@@ -149,5 +158,3 @@ menuOpcoes().
 
 main :-
 menuOpcoes().
-
-
