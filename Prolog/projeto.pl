@@ -24,32 +24,6 @@ write("/"),
 write(" Ano: "),
 writeln(Ano).
 
-% Lista todos os veiculos disponiveis no sistema
-listaVeiculosDisponiveis():- writeln("Veiculos Disponiveis:"),
-findall(Modelo, veiculo(_,_,Modelo,_), Veiculos),
-imprimeVeiculosDisponiveis(Veiculos).
-
-% Imprime todos os veiculos disponiveis no sistema
-imprimeVeiculosDisponiveis([]).
-imprimeVeiculosDisponiveis([H|T]):- not(locado(veiculo(Id,Tipo,H,Ano))) ->
-veiculo(Id,Tipo,H,Ano),
-exibirInformacoes(Id,Tipo,H,Ano),
-imprimeVeiculosDisponiveis(T) ;
-imprimeVeiculosDisponiveis(T) .
-
-% Imprime todos os veiculos indisponiveis no sistema
-imprimeVeiculosIndisponiveis([]).
-imprimeVeiculosIndisponiveis([H|T]):- locado(veiculo(Id,Tipo,H,Ano)) ->
-veiculo(Id,Tipo,H,Ano),
-exibirInformacoes(Id,Tipo,H,Ano),
-imprimeVeiculosIndisponiveis(T) ;
-imprimeVeiculosIndisponiveis(T) .
-
-% Lista todos os veiculos indisponiveis no sistema
-listaVeiculosIndisponiveis():- writeln("Veiculos Indisponiveis:"),
-findall(Modelo, veiculo(_,_,Modelo,_), Veiculos),
-imprimeVeiculosIndisponiveis(Veiculos).
-
 % Aluga um veiculo do sistema a partir do ID
 alugarVeiculo() :- writeln("Insira o ID do veiculo a ser alugado:"),
 read(Id),
