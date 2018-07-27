@@ -12,17 +12,10 @@ exibirInformacoes(Id,Tipo,H,Ano),
 ID_Prox is ID + 1,
 listaVeiculos(T, ID_Prox).
 
-exibirInformacoes(Id,Tipo,H,Ano) :- write("ID: "),
-write(Id),
-write("/"),
-write(" Tipo: "),
-write(Tipo),
-write("/"),
-write(" Modelo: "),
-write(H),
-write("/"),
-write(" Ano: "),
-writeln(Ano).
+exibirInformacoes(Id,Tipo,H,Ano) :- write("ID: "), write(Id),
+write("/"), write(" Tipo: "), write(Tipo),
+write("/"), write(" Modelo: "), write(H),
+write("/"), write(" Ano: "), writeln(Ano).
 
 % Lista todos os veiculos disponiveis no sistema
 listaVeiculosDisponiveis():- writeln("Veiculos Disponiveis:"),
