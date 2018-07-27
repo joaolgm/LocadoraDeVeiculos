@@ -29,16 +29,16 @@ listaVeiculosDisponiveis():- writeln("Veiculos Disponiveis:"),
 findall(Modelo, veiculo(_,_,Modelo,_), Veiculos),
 imprimeVeiculosDisponiveis(Veiculos).
 
-imprimeVeiculosDisponiveis([]).
 % Imprime todos os veiculos disponiveis no sistema
+imprimeVeiculosDisponiveis([]).
 imprimeVeiculosDisponiveis([H|T]):- not(locado(veiculo(Id,Tipo,H,Ano))) ->
 veiculo(Id,Tipo,H,Ano),
 exibirInformacoes(Id,Tipo,H,Ano),
 imprimeVeiculosDisponiveis(T) ;
 imprimeVeiculosDisponiveis(T) .
 
-imprimeVeiculosIndisponiveis([]).
 % Imprime todos os veiculos indisponiveis no sistema
+imprimeVeiculosIndisponiveis([]).
 imprimeVeiculosIndisponiveis([H|T]):- locado(veiculo(Id,Tipo,H,Ano)) ->
 veiculo(Id,Tipo,H,Ano),
 exibirInformacoes(Id,Tipo,H,Ano),
